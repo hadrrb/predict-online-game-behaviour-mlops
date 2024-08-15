@@ -1,0 +1,83 @@
+services:
+  mage-platform:
+    image: mageai/mageai:latest
+    env_file:
+      - .env.dev
+    command: mage start ${PROJECT_NAME}
+    ports:
+      - 6789:6789
+    volumes:
+      - .:/home/src/
+      # Local machine’s SSH keys to pull and push to your GitHub repository.
+      - ~/.ssh:/root/.ssh:ro
+      # Local machine’s GitHub configs
+      - ~/.gitconfig:/root/.gitconfig:ro
+    restart: on-failure:5
+    networks:
+      - back-tier
+    depends_on:
+      - db
+
+  db:
+    image: pgvector/pgvector:0.6.0-pg16
+    env_file:
+      - .env.dev
+    ports:
+      - 5432:5432
+    volumes:
+      # Custom database initialization scripts (optional).
+      - ./scripts/database:/docker-entrypoint-initdb.d
+    restart: always
+    networks:
+      - back-tier
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.15.1
+    ports:
+      - 5000:5000
+    volumes:
+      - ./scripts/mlflow.sh:/root/scripts/mlflow.sh
+    entrypoint: /root/scripts/mlflow.sh
+    networks:
+      - back-tier
+      - front-tier
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - back-tier
+      - front-tier  
+
+  grafana:
+    image: grafana/grafana-enterprise
+    user: "472"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+      - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+      - ./dashboards:/opt/grafana/dashboards
+    networks:
+      - back-tier
+      - front-tier
+    restart: always
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DATA_DIR=/tmp/localstack/data
+    networks:
+      - back-tier
+
+volumes: 
+  grafana_data: {}
+
+networks:
+  front-tier:
+  back-tier:
