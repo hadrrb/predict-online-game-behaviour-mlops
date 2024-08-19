@@ -6,7 +6,6 @@ services:
     entrypoint: mage start ${PROJECT_NAME}
     ports:
       - 6789:6789
-      - 7777:7777
     volumes:
       - .:/home/src/
       # Local machine’s SSH keys to pull and push to your GitHub repository.
