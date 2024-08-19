@@ -1,0 +1,9 @@
+evidently
+prefect
+pandas
+mlflow
+psycopg
+psycopg_binary
+boto3
+psycopg[binary]
+
