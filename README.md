@@ -5,7 +5,7 @@ It uses the Predict Online Gaming Behavior Dataset from Kaggle: https://www.kagg
 
 ## How to run?
 
-### Orchestration (Mage AI)
+### Orchestration (Mage AI), Experiment tracking (MLFlow)
 To run the core of the project please run:
 
 ```bash
@@ -15,10 +15,11 @@ docker compose is required to run this command.
 As a result a bunch of services will start, including Mage, Localstack, a Postgres db, Grafana, MLFlow and admirer.
 
 The orchestration pipelines can be found on Mage under `localhost:6789`.
-There is one pipeline for running the training and saving the model to s3 bucket.
-And a second pipeline that selects the model with highest accuracy and copies it to another s3 bucket, that is used for deployment.
+There is one pipeline for running the training and logging it to MLFlow and saving the model to s3 bucket.
+And a second pipeline that selects the model with highest accuracy in the model registry and copies it to another s3 bucket, that is used for deployment.
 
 Other services can ba accessed as well, please refer to `compose.yaml` for the correct ports.
+
 
 ### Deployment (Flask app)
 To proceed with the deployment run the following code:
