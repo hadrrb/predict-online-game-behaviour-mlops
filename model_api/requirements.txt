@@ -1,0 +1,7 @@
+Flask==2.3.2
+mlflow==2.15.1
+boto3==1.26.6
+pandas==1.5.3
+lz4==4.3.3
+psutil==5.9.8
+cloudpickle==3.0.0

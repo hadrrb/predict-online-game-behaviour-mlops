@@ -1,0 +1,15 @@
+triggers:
+- description: null
+  envs: []
+  last_enabled_at: 2024-08-19 18:47:23.499106+00:00
+  name: exquisite voice
+  pipeline_uuid: deploy_best_model
+  schedule_interval: '@daily'
+  schedule_type: time
+  settings:
+    landing_time_enabled: false
+  sla: null
+  start_time: 2024-08-19 18:47:00+00:00
+  status: active
+  token: 82126a819f684a0db955392cd4af934d
+  variables: {}

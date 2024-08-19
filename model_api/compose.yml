@@ -1,0 +1,10 @@
+services:
+  flask:
+    build: .
+    ports:
+      - "7777:7777"
+    environment:
+      - MLFLOW_S3_ENDPOINT_URL=http://host.docker.internal:4566
+      - AWS_ACCESS_KEY_ID=localstack
+      - AWS_SECRET_ACCESS_KEY=localstack
+      - AWS_DEFAULT_REGION=us-east-1

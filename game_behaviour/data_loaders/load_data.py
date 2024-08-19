@@ -1,7 +1,8 @@
 from mage_ai.io.file import FileIO
-if 'data_loader' not in globals():
+
+if "data_loader" not in globals():
     from mage_ai.data_preparation.decorators import data_loader
-if 'test' not in globals():
+if "test" not in globals():
     from mage_ai.data_preparation.decorators import test
 
 
@@ -16,7 +17,7 @@ def load_data_from_file(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#fileio
     """
-    filepath = '/home/src/data/online_gaming_behavior_dataset.csv'
+    filepath = "/home/src/data/online_gaming_behavior_dataset.csv"
 
     return FileIO().load(filepath)
 
@@ -26,4 +27,4 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    assert output is not None, 'The output is undefined'
+    assert output is not None, "The output is undefined"

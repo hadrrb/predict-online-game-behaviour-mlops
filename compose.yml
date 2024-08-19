@@ -1,11 +1,12 @@
 services:
   mage-platform:
-    image: mageai/mageai:latest
+    build: .
     env_file:
       - .env.dev
-    command: mage start ${PROJECT_NAME}
+    entrypoint: mage start ${PROJECT_NAME}
     ports:
       - 6789:6789
+      - 7777:7777
     volumes:
       - .:/home/src/
       # Local machine’s SSH keys to pull and push to your GitHub repository.
@@ -33,6 +34,8 @@ services:
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.15.1
+    env_file:
+      - .env.dev
     ports:
       - 5000:5000
     volumes:
@@ -74,6 +77,8 @@ services:
       - DATA_DIR=/tmp/localstack/data
     networks:
       - back-tier
+    volumes:
+      - ./aws:/etc/localstack/init/ready.d
 
 volumes: 
   grafana_data: {}
